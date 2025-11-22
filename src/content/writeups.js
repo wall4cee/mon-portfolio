@@ -2,7 +2,7 @@ export const writeups = [
   {
     title: "Room HackTheBox - Web exploitation (Plugin Wordpress, Nmap, Metasploit)",
     platform: "HackTheBox",
-    link: "https://github.com/wall4cee/writeups/tree/main/htb/web-exploit-basics"
+    link: "https://github.com/wall4cee/writeups/tree/main/htb/web-exploit-basics/htb_writeup_exploitation.md"
   },
   {
     title: "CTF StarHack 2025",
