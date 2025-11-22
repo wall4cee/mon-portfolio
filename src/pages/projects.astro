@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import { projects } from '../content/projects.js';
+---
+
+<BaseLayout title="Projets - Mon Portfolio">
+  <Navbar />
+  
+  <main class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 py-12 px-4">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Header -->
+      <div class="mb-12">
+        <h1 class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-4">
+          $ ls /Projects
+        </h1>
+        <p class="text-gray-400 text-lg">My development and cybersecurity projects</p>
+      </div>
+
+      <!-- Grid des projets -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {projects.map((p, index) => {
+          // Couleurs alternées pour chaque projet
+          const colors = [
+            { border: 'border-cyan-500/30', hover: 'hover:border-cyan-500/60', shadow: 'hover:shadow-cyan-500/20', text: 'text-cyan-400', bg: 'bg-cyan-500/20', gradient: 'from-cyan-500/5' },
+            { border: 'border-purple-500/30', hover: 'hover:border-purple-500/60', shadow: 'hover:shadow-purple-500/20', text: 'text-purple-400', bg: 'bg-purple-500/20', gradient: 'from-purple-500/5' },
+            { border: 'border-blue-500/30', hover: 'hover:border-blue-500/60', shadow: 'hover:shadow-blue-500/20', text: 'text-blue-400', bg: 'bg-blue-500/20', gradient: 'from-blue-500/5' },
+            { border: 'border-pink-500/30', hover: 'hover:border-pink-500/60', shadow: 'hover:shadow-pink-500/20', text: 'text-pink-400', bg: 'bg-pink-500/20', gradient: 'from-pink-500/5' }
+          ];
+          const color = colors[index % colors.length];
+          
+          return (
+            <div class={`group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border ${color.border} rounded-2xl p-8 ${color.hover} transition-all duration-300 hover:shadow-2xl ${color.shadow} hover:-translate-y-1`}>
+              <div class={`absolute inset-0 bg-gradient-to-br ${color.gradient} to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity`}></div>
+              
+              <div class="relative">
+                <!-- Icône + Badge -->
+                <div class="flex items-start justify-between mb-6">
+                  <div class={`w-14 h-14 ${color.bg} rounded-xl flex items-center justify-center`}>
+                    {p.title.includes('Dev-Web') ? (
+                      <svg class={`w-8 h-8 ${color.text}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                      </svg>
+                    ) : (
+                      <svg class={`w-8 h-8 ${color.text}`} fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                      </svg>
+                    )}
+                  </div>
+                  
+                  <span class={`px-3 py-1 ${color.bg} ${color.text} text-xs font-semibold rounded-full border ${color.border}`}>
+                    {p.title.match(/\[(.*?)\]/)?.[1] || 'Projet'}
+                  </span>
+                </div>
+
+                <!-- Titre -->
+                <h2 class="text-2xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 transition-all">
+                  {p.title.replace(/\[.*?\]\s*/, '')}
+                </h2>
+
+                <!-- Description -->
+                <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                  {p.desc}
+                </p>
+
+                <!-- Lien -->
+                <a href={p.link}
+                   class={`inline-flex items-center gap-2 ${color.text} text-lg font-semibold hover:opacity-80 transition-opacity group/link`}>
+                  <span>Check project</span>
+                  <svg class="w-5 h-5 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <!-- Message si aucun projet -->
+      {projects.length === 0 && (
+        <div class="text-center py-20">
+          <svg class="w-20 h-20 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          <p class="text-gray-400 text-xl">No projects yet</p>
+        </div>
+      )}
+
+    </div>
+  </main>
+</BaseLayout>
